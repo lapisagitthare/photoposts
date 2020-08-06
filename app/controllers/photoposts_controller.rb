@@ -18,7 +18,7 @@ class PhotopostsController < ApplicationController
     else
       @photoposts = current_user.feed_photoposts.order(id: :desc).page(params[:page]).per(10)
       flash.now[:danger] = '写真の投稿に失敗しました。'
-      render '/'
+      render :new
     end
   end
 

@@ -1,1 +1,6 @@
+<% if logged_in? %>
+  <div class="text-center">
+    <p>自分の投稿一覧</p>
+  </div> 
+<% end %>
 <%= render 'photoposts/photoposts', photoposts: @photoposts %>
