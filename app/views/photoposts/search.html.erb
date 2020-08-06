@@ -1,0 +1,32 @@
+<div class="text-center">
+  <h1>検索</h1>
+</div>
+
+<div class="row">
+  <div class="col-sm-6 offset-sm-3">
+
+    <%= form_with(model: @photopost, local: true) do |f| %>
+      
+      <div class="form-group">
+        <%= f.label :title, 'タイトル' %>
+        <%= f.text_field :title, class: 'form-control' %>
+      </div>
+
+      <%= f.submit'検索', class: 'btn btn-primary btn-block' %>
+    <% end %>
+  </div>
+</div>
+
+<ul class="list-unstyled">
+  <% @photoposts.each do |photopost| %>
+    <li class="media mb-3">
+      <div class="media-body">
+        <div>
+          <%= photopost.title %> <span class="text-muted">posted at <%= photopost.created_at %></span>
+        </div>
+        <%= link_to image_tag(photopost.image? ? photopost.image.thumbnail.url : nil), photopost_path(photopost.id) %>
+      </div>
+    </li>
+  <% end %>
+</ul>
+<%= paginate @photoposts %>
