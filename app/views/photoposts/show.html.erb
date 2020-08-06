@@ -12,7 +12,17 @@
     <%= @photopost.title %>
   </div>
   <div class="col-md-2">
-    <p>okiniiri</p>
+    <% if current_user.favoriting?(@photopost) %>
+      <%= form_with(model: current_user.favorites.find_by(photopost_id: @photopost.id), local: true, method: :delete, class: "d-inline") do |f| %>
+        <%= hidden_field_tag :photopost_id, @photopost.id %>
+        <%= f.submit 'お気に入り解除', class: 'btn btn-danger btn-block',class: 'btn btn-danger btn-sm' %>
+      <% end %>
+    <% else %>
+      <%= form_with(model: current_user.favorites.build, local: true, class: "d-inline") do |f| %>
+        <%= hidden_field_tag :photopost_id, @photopost.id %>
+        <%= f.submit 'お気に入り', class: 'btn btn-primary btn-block',class: 'btn btn-success btn-sm' %>
+      <% end %>
+    <% end %>
   </div>
   <div class="col-md-1">
     <% if current_user == @photopost.user %>

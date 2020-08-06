@@ -13,10 +13,13 @@ class User < ApplicationRecord
   has_many :followings, through: :relationships, source: :follow
   has_many :reverses_of_relationship, class_name: 'Relationship', foreign_key: 'follow_id'
   has_many :followers, through: :reverses_of_relationship, source: :user
+  has_many :favorites, dependent: :destroy
+  has_many :favorite_photoposts, through: :favorites, source: :photopost
   
   def to_param
     name
   end
+  
   def follow(other_user)
     unless self == other_user
       self.relationships.find_or_create_by(follow_id: other_user.id)
@@ -34,6 +37,19 @@ class User < ApplicationRecord
   
   def feed_photoposts
     Photopost.where(user_id: self.following_ids + [self.id])
+  end
+  
+  def favorite(photopost)
+    self.favorites.find_or_create_by(photopost_id: photopost.id)
+  end
+  
+  def unfavorite(photopost)
+    favorite = self.favorites.find_by(photopost_id: photopost.id)
+    favorite.destroy if favorite
+  end
+  
+  def favoriting?(photopost)
+    self.favorite_photoposts.include?(photopost)
   end
   
 end
