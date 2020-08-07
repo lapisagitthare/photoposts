@@ -16,7 +16,6 @@
       <div class="form-group">
         <%= f.label :image, '写真' %>
         <%= f.file_field :image %>
-        <%= image_tag @photopost.image.url if @photopost.image? %>
       </div>
 
       <%= f.submit '投稿', class: 'btn btn-primary btn-block' %>
