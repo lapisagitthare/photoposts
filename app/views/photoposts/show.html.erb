@@ -4,7 +4,7 @@
     <div>
       <%= link_to @photopost.user.name, user_path(@photopost.user) %> <span class="text-muted">posted at <%= @photopost.created_at %></span>
     </div>
-    <%= image_tag @photopost.image.url if @photopost.image? %>
+    <%= image_tag @photopost.image.thumbnail.url if @photopost.image? %>
   </div>
 </div>
 <div class="row">
